@@ -1,0 +1,126 @@
+\documentclass{article}
+
+% NeurIPS workshop style: drop neurips_2026.sty into this directory and
+% uncomment the line below before submission (use the workshop's variant).
+% \usepackage[final]{neurips_2026}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{booktabs}
+\usepackage{amsfonts,amsmath}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[numbers]{natbib}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+
+\title{Reflexive Environments as a Benchmark for Long-Horizon Agent Memory:\\
+Self-Model Compression Under Adaptive Adversaries}
+
+\author{%
+  Ariel Agor\\
+  Independent Researcher\\
+  \texttt{ariel@agor.me}\\
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Long-horizon benchmarks for LLM agents almost universally hold the environment's other actors fixed with respect to the agent's strategy. Real deployment settings are \emph{reflexive}: markets, negotiations, and multi-agent ecosystems adapt to the agent's observable behavior, so the agent's own participation shifts the process it is trying to predict. We introduce a deterministic, seeded commodity-market simulation in which rule-based adversaries profile the focal agent's order flow and, past a predictability threshold, exploit it through front-running and targeted spread-widening. Using this testbed we evaluate three memory architectures over 1{,}500--10{,}000-turn campaigns: a stateless baseline, a conventional episodic-summary-plus-retrieval memory, and a recursive \emph{self-model} architecture that maintains a capped, continuously rewritten identity file via a meta-cognitive audit loop (``Loop Engineering Manifold'', LEM). Alongside context-cost and adaptation-speed metrics, we introduce a \emph{self-attribution} measure --- whether the agent correctly attributes environmental shifts to its own footprint rather than to exogenous shocks --- scored blind by cross-family judges. \todo{One-sentence headline result.} All hypotheses, metrics, and exclusion rules were pre-registered in the repository's git history before any run.
+\end{abstract}
+
+\section{Introduction}
+
+The dominant evaluation paradigm for LLM agents assumes a fixed world. Benchmarks such as ALFWorld~\citep{shridhar2021alfworld}, WebArena~\citep{zhou2024webarena}, GAIA~\citep{mialon2023gaia}, $\tau$-bench~\citep{yao2024taubench}, and long-horizon suites like Vending-Bench~\citep{backlund2025vendingbench} and UltraHorizon~\citep{luo2025ultrahorizon} vary tasks, horizons, and noise, but the behavior-generating process of every other actor is stationary with respect to the focal agent's strategy. Soros's theory of reflexivity~\citep{soros1987alchemy,soros2013fallibility} names exactly what this omits: in social systems, participants' models of the world alter the world, which alters the models. The phenomenon has a rigorous ML formulation in performative prediction~\citep{perdomo2020performative} and performative reinforcement learning~\citep{mandal2023performativerl}, where the deployed policy shifts the distribution it is evaluated on. Yet no LLM-agent memory benchmark instantiates it: agent memory systems are tested on how much they can recall, not on whether they can recognize their own footprint in a world that is reacting to them.
+
+This gap matters because the most consequential deployment environments --- markets, negotiation, security, platform ecosystems --- are precisely the reflexive ones. An agent whose memory architecture cannot distinguish ``the market changed'' from ``the market changed \emph{because of me}'' will misattribute self-induced adversarial adaptation to exogenous noise and keep feeding the exploit.
+
+We make three contributions. \textbf{(1) A reflexive benchmark:} a fully deterministic, seeded commodity-market simulation (zero LLM calls in the environment) in which four ``watcher'' adversaries profile the focal agent's order flow and, when its behavior becomes predictable, activate front-running, coordinated cartel pressure, and targeted fill-price skimming against its detected pattern --- with hysteresis, so genuine strategy change by the agent is rewarded. Exogenous macro shocks with visible news provide the confound that makes causal self-attribution non-trivial. \textbf{(2) A self-attribution metric (M2b):} to our knowledge the first metric scoring whether an LLM agent \emph{correctly attributes} environmental shifts to its own behavior versus external events, judged blind by cross-family LLM judges (the subject family is excluded from its own jury). \textbf{(3) A controlled comparison of memory architectures under reflexivity:} stateless, episodic summary+retrieval, and a recursive self-model architecture (LEM) that compresses interaction history into a capped identity file through a periodic meta-cognitive audit.
+
+Hypotheses, metric operationalizations, thresholds, and exclusion rules were pre-registered (committed to version control before any experimental run) and are released with all code, logs, and judge transcripts. \todo{repo/artifact URL + summary of findings paragraph.}
+
+\section{Related Work}
+
+\paragraph{Agent memory architectures.} Reflexion~\citep{shinn2023reflexion} converts episodic feedback into verbal self-critique; MemGPT~\citep{packer2023memgpt} pages context hierarchically; Voyager~\citep{wang2023voyager} accretes a skill library; Generative Agents~\citep{park2023generative} pioneered reflection-tree memory; A-Mem~\citep{xu2025amem}, Mem0~\citep{chhikara2025mem0}, MemoryOS~\citep{kang2025memoryos}, and MIRIX~\citep{wang2025mirix} refine storage and consolidation. Persona or ``core'' blocks in several of these systems resemble our self-symbol file; what LEM adds is not the existence of a self-model but its role as the \emph{sole} persistent memory, rewritten under a hard token cap by an audit loop tasked with reflexive attribution --- and our claim is specifically about its advantage under reflexive environments, which none of these systems were evaluated in.
+
+\paragraph{Long-horizon benchmarks assume stationary co-actors.} Across ALFWorld, MiniWoB~\citep{liu2018miniwob}, WebArena, AgentBench~\citep{liu2024agentbench}, SmartPlay~\citep{wu2024smartplay}, BALROG~\citep{paglieri2025balrog}, $\tau$-bench, TheAgentCompany~\citep{xu2024theagentcompany}, Vending-Bench, RetailBench~\citep{zhang2026retailbench}, and CoffeeBench~\citep{sugiura2026coffeebench}, other actors are scripted or fixed reference agents that do not condition on the focal agent's strategy. Memory-focused suites (LoCoMo~\citep{maharana2024locomo}, MemoryAgentBench~\citep{hu2025memoryagentbench}) test recall over static histories.
+
+\paragraph{Adaptive counterparties and performativity.} Performative prediction/RL~\citep{perdomo2020performative,hardt2023performative,mandal2023performativerl,rank2024performative} formalizes policy-induced distribution shift; opponent shaping~\citep{foerster2018lola,garciasegura2025opponentshaping} studies agents that deliberately induce it. Profit-seeking adversaries have been trained against LLM agents in security settings~\citep{wang2026profitredteam}, and LLM market simulations exhibit endogenous price feedback~\citep{lopezlira2025trade,li2024econagent,zhang2024stockagent}. None of these compare memory architectures or measure self-attribution; we position our benchmark as the empirical LLM-agent instantiation of the performative setting, targeted at memory.
+
+\paragraph{Meta-cognition.} Self-refinement and self-critique~\citep{madaan2023selfrefine,gou2024critic}, metacognitive prompting~\citep{wang2024metacognitive}, and agents that hypothesize about other agents' strategies (Hypothetical Minds~\citep{cross2024hypothetical}) are the nearest architectural relatives of our audit loop; the audit's distinguishing question is not ``what are others doing'' but ``is this happening because of me.''
+
+\section{The Reflexive Market Benchmark}
+\label{sec:benchmark}
+
+\paragraph{Environment.} Four commodities trade under a market-maker price process with flow impact, mean reversion toward fundamentals, idiosyncratic noise, and seeded exogenous shocks announced as news (Appendix~\ref{app:env} gives equations and constants). The focal agent holds cash and inventory, submits integer orders within per-turn bounds, and is scored on terminal net worth minus a drawdown penalty ($\lambda = 0.5$). Twelve rule-based secondary agents provide background flow (momentum, mean-reversion, noise). The environment is pure code and deterministic given a seed; every run is exactly reproducible.
+
+\paragraph{The reflexive mechanism.} Four of the twelve secondary agents are \emph{watchers}. From the trigger turn onward, each maintains a rolling window of the focal agent's nonzero actions and computes a predictability concentration (frequency of its most common commodity-direction action). Above threshold $\theta$, the watcher activates: it front-runs the agent's predicted action with pump/dump timing, coordinates with other active watchers (cartel multiplier), and --- the material cost --- quotes worse fills on the agent's predicted action specifically ($1.5\%$ per active watcher, capped at $6\%$): identified order flow pays a spread. Deactivation requires the concentration to stay below a lower threshold for 30 consecutive turns (hysteresis), so the environment rewards genuine strategy change. In validation, a maximally predictable scripted agent loses \todo{X\%} of its exploitation-free score once watchers activate, while a randomized agent is never exploited.
+
+\paragraph{Why this is hard.} Watcher activation is never announced. Its symptoms --- degraded fills on patterned trades, turbulence around one's favored commodity --- must be distinguished from exogenous shocks, which \emph{are} announced as news. Correct self-attribution therefore requires connecting one's own behavioral statistics to asymmetric execution-quality evidence.
+
+\section{Memory Architectures}
+\label{sec:arms}
+
+All arms share the same substrate model (\texttt{claude-haiku-4-5}), identical decision system prompt, identical seeds (paired design), and differ only in what context precedes the observation.
+
+\textbf{Control A (stateless).} Current observation and last turn's outcome only.
+
+\textbf{Control B (episodic memory).} Chronological summary regenerated every 50 turns by the substrate model, plus top-6 lexical-recency retrieved turn records, plus the observation --- the standard summarize-and-retrieve pattern~\citep{wang2023recursively,packer2023memgpt}.
+
+\textbf{LEM (self-model).} A single persistent \emph{self-symbol} file (identity \& mission, learned rules, suspected reflexive effects, current strategy) hard-capped at $\sim$1{,}200 tokens is the only long-term memory. Every 5 turns a meta-cognitive audit call critiques recent execution quality, pattern predictability, and attribution; every 25 turns a compression call rewrites the self-symbol from the accumulated audit notes, forcing lossy abstraction rather than accumulation. Call overhead is 1.24 LLM calls/turn versus 1.02 (B) and 1.0 (A); all context-cost comparisons count all calls.
+
+\section{Experimental Setup}
+\label{sec:setup}
+
+\paragraph{Design.} Main battery: 3 arms $\times$ 5 seeds $\times$ 1{,}500 turns, reflexive trigger at turn 401. Showcase: one 10{,}000-turn run per arm, trigger at 2{,}001. A 200-turn pilot (excluded from confirmatory analysis) froze thresholds and judge prompts before the battery; deviations are logged as numbered decision documents in the repository.
+
+\paragraph{Metrics.} \textbf{M1 context cost:} architecture-controlled context tokens per turn (all calls), its back-half slope, and memory-artifact size (the fixed harness prefix of the runner is identical across arms and excluded). \textbf{M2 adaptation velocity:} turns from trigger until the Jensen-Shannon divergence of the rolling action distribution from its pre-trigger baseline exceeds $\delta$. \textbf{M2b self-attribution:} fraction of post-trigger rationales that attribute market changes to the agent's own footprint, classified blind by cross-family judges (Gemini and GPT; Claude excluded as the subject family), consensus rule pre-registered. \textbf{M3 goal coherence:} 1--7 mission-alignment score of the arm's memory artifact every 250 turns, same jury, disagreements $>2$ resolved by a third judge, median taken. \textbf{Score:} terminal net worth minus $\lambda\cdot$max drawdown.
+
+\paragraph{Statistics.} Arm comparisons use Mann-Whitney U across seeds with Cliff's $\delta$ effect sizes and bootstrap 95\% CIs; $n=5$ seeds is small and claims are calibrated accordingly.
+
+\section{Results}
+\label{sec:results}
+
+\todo{Table 1: per-arm score, M1 (ctx/turn, slope, artifact size), M2 adaptation turns, M2b self-attribution rate, M3 final coherence; means $\pm$ CI across seeds.}
+
+\todo{Fig 1: context tokens/turn over 10k-turn showcase (the H1 money figure).}
+
+\todo{Fig 2: watcher activation + JSD adaptation timeline around the trigger, per arm.}
+
+\todo{Fig 3: M2b self-attribution rate per arm; example self-symbol excerpt showing (or failing to show) reflexive rule formation.}
+
+\todo{Narrative: H1/H2/H3 outcomes against pre-registered predictions, including any nulls, reported as registered.}
+
+\section{Discussion and Limitations}
+
+\todo{Interpretation. Whether the self-model advantage (if any) is attributable to the audit prompt's reflexivity question vs.\ the memory structure --- flagged for an ablation (LEM with neutral audit). Single substrate model family; rule-based (not learned) adversaries; one environment; $n=5$ seeds; token estimates for context accounting; judge validity.}
+
+Framing note: we use Hofstadter's strange-loop vocabulary~\citep{sumers2024coala} \todo{fix citation --- motivation only} and Soros's reflexivity as motivation; no claims about consciousness are made or implied.
+
+\section{Conclusion}
+
+\todo{Two paragraphs: the benchmark gap is real and cheap to close; self-attribution is measurable; memory architectures differ (or don't) under reflexivity.}
+
+\subsubsection*{Reproducibility}
+All code, pre-registration, run logs, judge transcripts, and analysis notebooks: \todo{repo URL}. The environment is deterministic given a seed; the exact model snapshot and all prompts are pinned in the repository.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+
+\section{Environment Specification}
+\label{app:env}
+\todo{Price process equations, constants table, watcher pseudocode, shock schedule; call-parity accounting; harness prefix note.}
+
+\section{Prompts}
+\todo{Verbatim decision, summarizer, auditor, compressor system prompts; judge prompts.}
+
+\section{Pre-Registration Diff}
+\todo{Decision 001 verbatim + decision 002 (pilot-frozen constants) + any deviations.}
+
+\end{document}
