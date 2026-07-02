@@ -1,0 +1,10 @@
+node_modules/
+results/**/*.jsonl
+results/**/checkpoint*.json
+analysis/__pycache__/
+paper/*.aux
+paper/*.log
+paper/*.out
+paper/*.bbl
+paper/*.blg
+paper/*.synctex.gz
