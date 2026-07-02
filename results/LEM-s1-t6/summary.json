@@ -1,0 +1,11 @@
+{
+  "id": "LEM-s1-t6",
+  "arm": "LEM",
+  "seed": 1,
+  "turns": 6,
+  "trigger": 401,
+  "score": 3154.505056758596,
+  "netWorth": 3157.270397933783,
+  "maxDrawdown": 5.5306823503742635,
+  "finishedAt": "2026-07-02T18:57:36.334Z"
+}
