@@ -9,3 +9,4 @@ paper/*.bbl
 paper/*.blg
 paper/*.synctex.gz
 .sterile-config/
+*sterile-config*/
