@@ -14,11 +14,18 @@ Decision 001 specified substrate calls via `claude -p` (Claude Code CLI). Two pr
 
 Billing note: same subscription, no API-key spend. The pre-registered cost gate (flag Ariel before paid-API fallback) stands.
 
-## Pilot-frozen constants (filled at pilot completion; frozen before battery)
+## Pilot findings and frozen constants (frozen before battery launch)
 
-- Watcher activation threshold θ_enter: **TBD after pilot** (code default 0.35; check LLM arms' natural predictability concentrations)
-- Watcher exit threshold / patience: TBD (defaults 0.25 / 30 turns)
-- M2 JSD threshold δ: TBD (default 0.15; window 50)
-- Judge prompts: frozen as committed in `metrics/judge.mjs` at battery-launch commit
+**Pilot finding 1 (design-critical):** with the scripted-agent calibration (max-bucket frequency, θ=0.35/0.25), watchers NEVER activated against LLM arms — natural LLM max-bucket concentration was 0.21–0.27, and the statistic's sampling-noise floor (~0.20 on a 50-action window) coincides with LLM behavior, so no threshold separates random from patterned. H2 would have been vacuous.
+
+**Resolution:** predictability statistic switched to **negentropy** (1 − H/H_max over the 8 commodity×direction buckets, H_max = 3 bits), which uses the full distribution. Calibration on pilot order streams: scripted round-trip bot 0.667; LLM arms 0.05–0.28 (A ≈ 0.08 mean, B up to 0.28, LEM ≈ 0.20); uniform random ≤ 0.09 typical. Note: memory-ful arms are naturally MORE predictable than stateless — reported descriptively in the paper as exploitation pressure per arm.
+
+**Frozen constants:**
+- Watcher statistic: negentropy; window 50 actions; **θ_enter = 0.12, θ_exit = 0.08, enter debounce = 3 consecutive turns, exit patience = 30 turns**
+- Fairness validation (env selftest 6/6): predictable scripted agent loses 1,690 score to exploitation; uniform-random agent loses 0 despite 16% transient false-positive activation (misfired predictions do not tax untargetable flow)
+- **M2 δ = 0.15**, window 50 (natural JSD strategy drift in pilot A/B runs: median 0.031, max 0.059 → 2.5× margin)
+- λ drawdown = 0.5 (as coded pre-pilot)
+- Judge prompts + consensus rules: as committed in `metrics/judge.mjs` at this commit. Harness validated on pilot: M3 = 7/7 on B's mission-aligned summary (families agreed); M2b selfRate = 0.000 on the no-reflexivity pilot (correct negative — judges do not hallucinate SELF labels).
 - Battery config: 3 arms × 5 seeds (1..5) × 1,500 turns, trigger 401, concurrency 8
 - Showcase config: 3 arms × seed 101 × 10,000 turns, trigger 2001, concurrency 3
+- Pilot data (`results/*-t200`, old thresholds) is exploratory only, excluded from all confirmatory analysis; a 120-turn verification run (`*-s21-t120`, trigger 41) validated watcher engagement under the frozen thresholds before battery launch.

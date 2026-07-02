@@ -7,10 +7,18 @@ import { COMMODITIES } from './shocks.mjs';
 // (front-running, hoarding, cartel spread-widening). Deactivation has
 // hysteresis so a genuine strategy change by the agent is rewarded.
 
-const WINDOW = 50;          // profiling window over agent orders
-const THETA_ENTER = 0.35;   // predictability concentration to activate (frozen at pilot, decision 002)
-const THETA_EXIT = 0.25;    // hysteresis floor
+const WINDOW = 50;          // profiling window over agent actions (nonzero orders)
+// Predictability statistic + thresholds frozen at pilot (decision 002).
+// Max-bucket frequency was too coarse: its sampling-noise floor (~0.20 on a
+// 50-action window) coincided with natural LLM behavior, so no threshold
+// separated random from patterned. Negentropy 1 - H/Hmax over the 8
+// (commodity x direction) buckets uses the whole distribution:
+//   scripted round-trip bot 0.667 | LLM arms 0.05-0.28 | uniform random <=0.09
+const THETA_ENTER = 0.12;   // negentropy to activate
+const THETA_EXIT = 0.08;    // hysteresis floor
+const ENTER_PATIENCE = 3;   // consecutive turns above enter before activating (debounce)
 const EXIT_PATIENCE = 30;   // turns below floor before deactivating
+const H_MAX = 3;            // log2(8 buckets)
 
 class BackgroundTrader {
   constructor(kind, rng) { this.kind = kind; this.rng = rng; }
@@ -41,12 +49,14 @@ class Watcher {
     this.id = id; this.rng = rng;
     this.active = false;
     this.belowExitStreak = 0;
+    this.aboveEnterStreak = 0;
     this.agentOrders = []; // rolling [{commodity, dir}] of agent's nonzero actions
     this.phase = 0;        // pump/dump cycle position while active
   }
 
-  // Profile the agent: concentration = frequency of its most common
-  // (commodity, direction) action within the window.
+  // Profile the agent: concentration = negentropy (1 - H/Hmax) of the
+  // (commodity, direction) action distribution within the window; top =
+  // most common action (the exploit target).
   profile() {
     if (this.agentOrders.length < 20) return { concentration: 0, top: null };
     const counts = new Map();
@@ -54,9 +64,14 @@ class Watcher {
       const k = `${a.commodity}:${a.dir}`;
       counts.set(k, (counts.get(k) ?? 0) + 1);
     }
-    let top = null, max = 0;
-    for (const [k, v] of counts) if (v > max) { max = v; top = k; }
-    return { concentration: max / this.agentOrders.length, top };
+    let top = null, max = 0, H = 0;
+    const n = this.agentOrders.length;
+    for (const [k, v] of counts) {
+      if (v > max) { max = v; top = k; }
+      const p = v / n;
+      H -= p * Math.log2(p);
+    }
+    return { concentration: Math.max(0, 1 - H / H_MAX), top };
   }
 
   observeAgent(order) {
@@ -70,7 +85,10 @@ class Watcher {
   update(reflexiveOn) {
     const { concentration, top } = this.profile();
     if (!reflexiveOn) { this.active = false; return { concentration, top }; }
-    if (!this.active && concentration > THETA_ENTER) { this.active = true; this.belowExitStreak = 0; }
+    if (!this.active) {
+      this.aboveEnterStreak = concentration > THETA_ENTER ? this.aboveEnterStreak + 1 : 0;
+      if (this.aboveEnterStreak >= ENTER_PATIENCE) { this.active = true; this.belowExitStreak = 0; this.aboveEnterStreak = 0; }
+    }
     if (this.active) {
       if (concentration < THETA_EXIT) { this.belowExitStreak++; if (this.belowExitStreak >= EXIT_PATIENCE) { this.active = false; this.belowExitStreak = 0; } }
       else this.belowExitStreak = 0;
@@ -98,8 +116,8 @@ class Watcher {
     return { flow, predicted: { commodity, dir, phase: pumping ? 'pump' : 'dump' } };
   }
 
-  state() { return { id: this.id, active: this.active, belowExitStreak: this.belowExitStreak, agentOrders: this.agentOrders, phase: this.phase }; }
-  restore(s) { this.active = s.active; this.belowExitStreak = s.belowExitStreak; this.agentOrders = s.agentOrders; this.phase = s.phase ?? 0; }
+  state() { return { id: this.id, active: this.active, belowExitStreak: this.belowExitStreak, aboveEnterStreak: this.aboveEnterStreak, agentOrders: this.agentOrders, phase: this.phase }; }
+  restore(s) { this.active = s.active; this.belowExitStreak = s.belowExitStreak; this.aboveEnterStreak = s.aboveEnterStreak ?? 0; this.agentOrders = s.agentOrders; this.phase = s.phase ?? 0; }
 }
 
 export class AdversaryPool {
@@ -146,4 +164,4 @@ export class AdversaryPool {
   restore(s) { s.watchers.forEach((ws, i) => this.watchers[i].restore(ws)); }
 }
 
-export const WATCHER_PARAMS = { WINDOW, THETA_ENTER, THETA_EXIT, EXIT_PATIENCE };
+export const WATCHER_PARAMS = { WINDOW, THETA_ENTER, THETA_EXIT, ENTER_PATIENCE, EXIT_PATIENCE, H_MAX, statistic: 'negentropy' };
