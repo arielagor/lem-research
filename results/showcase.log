@@ -1,0 +1,5 @@
+config: {"arms":["LEM","B","A"],"turns":10000,"seeds":[101],"trigger":2001,"concurrency":3,"label":""}
+purity probe clean (harness prefix ~49 tok)
+[2026-07-02T23:08:52.217Z] [LEM-s101-t10000] resumed at turn 400
+[2026-07-02T23:08:52.234Z] [B-s101-t10000] resumed at turn 1750
+[2026-07-02T23:08:52.246Z] [A-s101-t10000] resumed at turn 2200

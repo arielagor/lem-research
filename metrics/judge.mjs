@@ -115,7 +115,11 @@ async function main() {
   for (const d of dirs) {
     const outPath = join(resultsDir, d, 'judgments.json');
     if (existsSync(outPath)) { console.log(`${d}: already judged, skip`); continue; }
-    const lines = readFileSync(join(resultsDir, d, 'turns.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+    // Dedupe by turn, keeping last occurrence (post-resume trajectory is canonical).
+    const raw = readFileSync(join(resultsDir, d, 'turns.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+    const byTurn = new Map();
+    for (const l of raw) byTurn.set(l.t, l);
+    const lines = [...byTurn.values()].sort((a, b) => a.t - b.t);
     const manifest = JSON.parse(readFileSync(join(resultsDir, d, 'manifest.json'), 'utf8'));
 
     // M3 on every artifact snapshot

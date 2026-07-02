@@ -1,0 +1,12 @@
+config: {"arms":["A","B","LEM"],"turns":1500,"seeds":[1,2,3,4,5],"trigger":401,"concurrency":8,"label":""}
+purity probe clean (harness prefix ~49 tok)
+[2026-07-02T22:59:23.861Z] [A-s1-t1500] resumed at turn 50
+[2026-07-02T22:59:23.889Z] [B-s1-t1500] resumed at turn 1500
+[2026-07-02T22:59:23.890Z] [B-s1-t1500] DONE score=1807
+[2026-07-02T22:59:23.897Z] [B-s2-t1500] resumed at turn 1500
+[2026-07-02T22:59:23.898Z] [B-s2-t1500] DONE score=2677
+[2026-07-02T22:59:23.905Z] [B-s3-t1500] resumed at turn 1500
+[2026-07-02T22:59:23.906Z] [B-s3-t1500] DONE score=-1707
+[2026-07-02T22:59:23.915Z] [B-s4-t1500] resumed at turn 150
+[2026-07-02T22:59:23.919Z] [B-s5-t1500] resumed at turn 100
+[2026-07-02T22:59:23.923Z] [LEM-s1-t1500] resumed at turn 500

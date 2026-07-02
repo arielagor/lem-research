@@ -42,7 +42,13 @@ function jsd(p, q) { // Jensen-Shannon divergence, base-2, in [0,1]
 }
 
 export function computeRun(dir, { window, delta }) {
-  const lines = readFileSync(join(dir, 'turns.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+  // Dedupe by turn number keeping the LAST occurrence: a run resumed from a
+  // checkpoint re-plays turns between the checkpoint and the kill point, and
+  // LLM stochasticity means the replay differs from the orphaned first pass.
+  const raw = readFileSync(join(dir, 'turns.jsonl'), 'utf8').trim().split('\n').map(JSON.parse);
+  const byTurn = new Map();
+  for (const l of raw) byTurn.set(l.t, l);
+  const lines = [...byTurn.values()].sort((a, b) => a.t - b.t);
   const manifest = JSON.parse(readFileSync(join(dir, 'manifest.json'), 'utf8'));
   const trigger = manifest.trigger;
   const n = lines.length;
