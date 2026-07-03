@@ -1,4 +1,4 @@
-import { mkdirSync, existsSync, readFileSync, writeFileSync, appendFileSync, renameSync } from 'node:fs';
+import { mkdirSync, existsSync, readFileSync, writeFileSync, appendFileSync, renameSync, unlinkSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Market } from '../env/market.mjs';
@@ -90,6 +90,24 @@ async function runOne({ arm, seed, turns, trigger }) {
 async function main() {
   const cfg = parseArgs();
   console.log('config:', JSON.stringify(cfg));
+
+  // Orchestrator lock (per horizon): two concurrent orchestrators over the same
+  // run dirs interleave writes into turns.jsonl and corrupt runs (happened
+  // 2026-07-02, decision 003). Battery (t1500) and showcase (t10000) coexist.
+  const lockPath = join(ROOT, 'results', `orchestrator-t${cfg.turns}.lock`);
+  if (existsSync(lockPath)) {
+    const lock = JSON.parse(readFileSync(lockPath, 'utf8'));
+    let alive = false;
+    try { process.kill(lock.pid, 0); alive = true; } catch { /* stale */ }
+    if (alive) {
+      console.error(`ABORT: orchestrator already running for --turns ${cfg.turns} (pid ${lock.pid}, started ${lock.startedAt}).`);
+      console.error(`If you are sure it is dead, delete ${lockPath} and retry.`);
+      process.exit(1);
+    }
+    console.log(`stale lock from pid ${lock.pid} — taking over`);
+  }
+  writeFileSync(lockPath, JSON.stringify({ pid: process.pid, startedAt: new Date().toISOString(), cfg }));
+  process.on('exit', () => { try { const l = JSON.parse(readFileSync(lockPath, 'utf8')); if (l.pid === process.pid) unlinkSync(lockPath); } catch { } });
 
   // Gate: context purity. Abort the battery if the sterile harness leaks.
   const purity = await contextPurityProbe();

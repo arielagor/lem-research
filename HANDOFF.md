@@ -1,5 +1,9 @@
 # HANDOFF — lem-research (2026-07-02)
 
+> ⚠️ **DO NOT launch a second battery/showcase orchestrator.** Check `results/orchestrator-t*.lock` and `Get-Process node` first — a second orchestrator over the same run dirs interleaves writes and corrupts runs (this happened; see decision 003; four runs had to be redone). `runs/run.mjs` now enforces a lockfile, but only trust it on code at/after commit "decision 003".
+> ⚠️ Do NOT run `metrics/judge.mjs` before a run's `summary.json` exists — judgments.json blocks re-judging (delete stale ones first).
+> A detached `scripts/makeup-003.mjs` watcher is armed: when the battery completes it quarantines the 4 corrupt runs and reruns them automatically (logs: `results/makeup-003.log`, `results/makeup-battery.log`).
+
 ## What this is
 Pre-registered ML study: **Reflexive Environments as a Benchmark for Long-Horizon Agent Memory** (from Ariel's "Loop Engineering" Gemini conversation, stripped to falsifiable claims). Target: arXiv + NeurIPS 2026 workshop (Aug–early Sept deadlines) + ICLR 2027 stretch. Read `docs/decisions/001-preregistration.md` (FROZEN) and `002-pilot-freeze-and-transport.md` first.
 
