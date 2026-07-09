@@ -15,3 +15,5 @@ main.pdf
 paper/*.pdf
 paper/build*.log
 paper/bibtex.log
+results/finalize.log
+results/*.marker
