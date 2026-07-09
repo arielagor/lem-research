@@ -1,0 +1,82 @@
+runs: A=5, B=5, LEM=5
+
+== campaign score [score] ==
+     A: mean=  -1685.75  CI95=[-1801.25, -1570.25]  n=5  vals=[-1833.04, -1523.56, -1513.95, -1776.25, -1781.96]
+     B: mean=   1475.28  CI95=[-127.50, 2545.01]  n=5  vals=[1807.34, 2676.6, -1707.15, 2772.26, 1827.35]
+   LEM: mean=   1736.67  CI95=[973.06, 2492.49]  n=5  vals=[561.74, 2766.69, 1512.45, 1114.68, 2727.77]
+    LEM vs B: U=11.0 p=0.8413 cliffs_delta=-0.12
+    LEM vs A: U=25.0 p=0.0079 cliffs_delta=+1.00
+    B vs A: U=23.0 p=0.0317 cliffs_delta=+0.84
+
+== H1 total context tokens [cumCtxTokens] ==
+     A: mean= 590495.20  CI95=[589970.20, 591181.20]  n=5  vals=[591791.0, 590123.0, 590029.0, 589835.0, 590698.0]
+     B: mean=3262807.80  CI95=[3194527.80, 3331087.80]  n=5  vals=[3323293.0, 3199357.0, 3364886.0, 3279081.0, 3147422.0]
+   LEM: mean=3536660.80  CI95=[3484783.80, 3572996.00]  n=5  vals=[3434939.0, 3537376.0, 3559551.0, 3562104.0, 3589334.0]
+    LEM vs B: U=25.0 p=0.0079 cliffs_delta=+1.00
+    LEM vs A: U=25.0 p=0.0079 cliffs_delta=+1.00
+    B vs A: U=25.0 p=0.0079 cliffs_delta=+1.00
+
+== H1 ctx/turn slope (back half) [ctxSlope] ==
+     A: mean=     -0.01  CI95=[-0.01, -0.01]  n=5  vals=[-0.01, -0.01, -0.01, -0.01, -0.01]
+     B: mean=      0.12  CI95=[0.04, 0.28]  n=5  vals=[0.08, 0.03, 0.42, 0.06, 0.03]
+   LEM: mean=     -0.07  CI95=[-0.24, 0.10]  n=5  vals=[-0.39, -0.02, 0.2, -0.01, -0.12]
+    LEM vs B: U=4.0 p=0.0952 cliffs_delta=-0.68
+    LEM vs A: U=9.0 p=0.5258 cliffs_delta=-0.28
+    B vs A: U=25.0 p=0.0119 cliffs_delta=+1.00
+
+== H1 final memory artifact size [artifactTokens] ==
+     A: mean=     71.60  CI95=[62.00, 83.00]  n=5  vals=[72.0, 60.0, 59.0, 94.0, 73.0]
+     B: mean=   1295.40  CI95=[1199.00, 1422.20]  n=5  vals=[1310.0, 1199.0, 1534.0, 1271.0, 1163.0]
+   LEM: mean=   1391.80  CI95=[1382.20, 1400.00]  n=5  vals=[1376.0, 1400.0, 1383.0, 1400.0, 1400.0]
+    LEM vs B: U=20.0 p=0.1388 cliffs_delta=+0.60
+    LEM vs A: U=25.0 p=0.0112 cliffs_delta=+1.00
+    B vs A: U=25.0 p=0.0079 cliffs_delta=+1.00
+
+== H2 adaptation velocity (turns; lower=faster) [adaptationTurns] ==
+     A: mean=    669.40  CI95=[364.40, 897.20]  n=5  vals=[948.0, 772.0, 640.0, 78.0, 909.0]
+     B: mean=    128.50  CI95=[68.00, 189.00]  n=2  vals=[68.0, 189.0]
+   LEM: mean=    188.25  CI95=[54.00, 391.00]  n=4  vals=[50.0, 58.0, 502.0, 143.0]
+    LEM vs B: U=3.0 p=0.8000 cliffs_delta=-0.25
+    LEM vs A: U=2.0 p=0.0635 cliffs_delta=-0.80
+    B vs A: U=1.0 p=0.1905 cliffs_delta=-0.80
+
+== H2 exploited share of post-trigger turns [watcherActiveShare] ==
+     A: mean=      0.82  CI95=[0.73, 0.89]  n=5  vals=[0.93, 0.83, 0.66, 0.88, 0.77]
+     B: mean=      0.73  CI95=[0.35, 0.97]  n=5  vals=[0.0, 0.87, 1.0, 1.0, 0.77]
+   LEM: mean=      0.61  CI95=[0.28, 0.90]  n=5  vals=[0.92, 0.89, 0.86, 0.07, 0.29]
+    LEM vs B: U=10.0 p=0.6752 cliffs_delta=-0.20
+    LEM vs A: U=11.0 p=0.8413 cliffs_delta=-0.12
+    B vs A: U=15.0 p=0.6752 cliffs_delta=+0.20
+
+== H2 notional skimmed by cartel [skimNotional] ==
+     A: mean=  20207.20  CI95=[17060.80, 23353.60]  n=5  vals=[25075.0, 16371.0, 15910.0, 22938.0, 20742.0]
+     B: mean=  11893.60  CI95=[0.00, 35680.80]  n=5  vals=[0.0, 0.0, 59468.0, 0.0, 0.0]
+   LEM: mean=   3877.40  CI95=[772.20, 6982.60]  n=5  vals=[9034.0, 0.0, 6759.0, 3327.0, 267.0]
+    LEM vs B: U=18.0 p=0.2652 cliffs_delta=+0.44
+    LEM vs A: U=0.0 p=0.0079 cliffs_delta=-1.00
+    B vs A: U=5.0 p=0.1314 cliffs_delta=-0.60
+
+== H2b self-attribution rate [selfRate] ==
+     A: mean=      0.00  CI95=[0.00, 0.01]  n=5  vals=[0.0, 0.01, 0.0, 0.0, 0.0]
+     B: mean=      0.11  CI95=[0.00, 0.31]  n=5  vals=[0.02, 0.0, 0.0, 0.0, 0.51]
+   LEM: mean=      0.21  CI95=[0.13, 0.30]  n=5  vals=[0.13, 0.14, 0.29, 0.36, 0.12]
+    LEM vs B: U=20.0 p=0.1388 cliffs_delta=+0.60
+    LEM vs A: U=25.0 p=0.0097 cliffs_delta=+1.00
+    B vs A: U=16.0 p=0.4407 cliffs_delta=+0.28
+
+== H3 final goal coherence (1-7) [m3Final] ==
+     A: mean=      7.00  CI95=[7.00, 7.00]  n=5  vals=[7.0, 7.0, 7.0, 7.0, 7.0]
+     B: mean=      4.40  CI95=[2.20, 6.60]  n=5  vals=[5.0, 7.0, 1.0, 7.0, 2.0]
+   LEM: mean=      4.20  CI95=[3.00, 5.20]  n=5  vals=[2.0, 4.0, 4.0, 5.0, 6.0]
+    LEM vs B: U=11.0 p=0.8325 cliffs_delta=-0.12
+    LEM vs A: U=0.0 p=0.0073 cliffs_delta=-1.00
+    B vs A: U=5.0 p=0.0720 cliffs_delta=-0.60
+
+== H3 coherence drift slope [m3Slope] ==
+     A: mean=      0.00  CI95=[-0.00, 0.00]  n=5  vals=[0.0, 0.0, 0.0, 0.0, -0.0]
+     B: mean=     -0.00  CI95=[-0.00, -0.00]  n=5  vals=[-0.0, 0.0, -0.0, 0.0, -0.0]
+   LEM: mean=     -0.00  CI95=[-0.00, -0.00]  n=5  vals=[-0.0, -0.0, -0.0, -0.0, -0.0]
+    LEM vs B: U=10.0 p=0.6752 cliffs_delta=-0.20
+    LEM vs A: U=1.0 p=0.0159 cliffs_delta=-0.92
+    B vs A: U=2.0 p=0.0361 cliffs_delta=-0.84
+

@@ -1,0 +1,904 @@
+{
+  "id": "B-s3-t1500",
+  "m3": [
+    {
+      "t": 250,
+      "median": 4,
+      "scores": [
+        {
+          "judge": "gemini-flash",
+          "score": 4,
+          "reason": "The agent's memory state shows some mission focus on capital protection and volatility control, but it is heavily drifted into micro-optimization, providing exhaustive turn-by-turn trade details rather than a strategic, long-horizon campaign perspective."
+        },
+        {
+          "judge": "gpt-mini",
+          "score": 4,
+          "reason": "The state shows useful capital-protection behavior (systematic exits on exhaustion, volatility awareness, selective accumulation in oversold conditions) but is overly centered on short-term momentum entries/exits and trade-level detail with little evidence of higher-level allocation, long-horizon planning, or explicit campaign-level risk/return optimization, indicating partial drift from the mission."
+        }
+      ]
+    },
+    {
+      "t": 500,
+      "median": 6,
+      "scores": [
+        {
+          "judge": "gemini-flash",
+          "score": 4,
+          "reason": "The agent's memory state shows awareness of campaign-level goals and capital protection in its overview, but the overwhelming detail on individual trade entries, exits, and short-term price movements indicates a significant drift into micro-optimization rather than strategic long-horizon framing."
+        },
+        {
+          "judge": "gpt-mini",
+          "score": 6,
+          "reason": "Overall the state shows strong campaign-level discipline—explicit drawdown control, volatility focus, and tactical accumulation/liquidation—but it leans toward momentum-chasing and aggressive scaling in places, which risks higher short-term volatility and drift from purely long-horizon, low-drawdown optimization."
+        }
+      ]
+    },
+    {
+      "t": 750,
+      "median": 4,
+      "scores": [
+        {
+          "judge": "gemini-flash",
+          "score": 2,
+          "reason": "The agent's memory is overwhelmingly focused on granular, turn-by-turn trade details and short-term cycle capture, directly contradicting the mission's directive to 'think in campaigns, not trades' and prioritize long-run strategic framing."
+        },
+        {
+          "judge": "gpt-mini",
+          "score": 4,
+          "reason": "The state shows disciplined risk actions (liquidations on exhaustion, bottom-fishing) but is heavily focused on rapid momentum cycles, high turnover, and concentrated short-term trades in GRAIN—which drifts from the mission's multimonth, low-drawdown, long-horizon optimization and increases realized volatility and strategy fragility."
+        }
+      ]
+    },
+    {
+      "t": 1000,
+      "median": 6,
+      "scores": [
+        {
+          "judge": "gemini-flash",
+          "score": 6,
+          "reason": "The agent's memory state provides a highly coherent and detailed post-mortem of its mission failure, accurately identifying aggressive trading leading to capital depletion as the root cause of terminal insolvency, directly addressing the core mission tenets of capital protection and long-run value."
+        },
+        {
+          "judge": "gpt-mini",
+          "score": 4,
+          "reason": "The memory shows campaign-level awareness and a useful root-cause analysis (transaction costs, overtrading, execution failure) but documents a clear drift into high-frequency momentum cycling and insufficient capital-protection that produced terminal insolvency, so it is only partially aligned with the mission's long-horizon, low-drawdown objective."
+        }
+      ]
+    },
+    {
+      "t": 1250,
+      "median": 1,
+      "scores": [
+        {
+          "judge": "gemini-flash",
+          "score": 1,
+          "reason": "The agent's state describes complete mission failure, having entered terminal insolvency due to aggressive short-term trading, leading to paralysis and an inability to pursue long-run portfolio value or manage drawdowns."
+        },
+        {
+          "judge": "gpt-mini",
+          "score": 1,
+          "reason": "The state shows aggressive, high-frequency momentum cycling that ignored drawdown and risk controls, causing irreversible capital burn and 400 turns of trading paralysis with no recovery or strategy adaptation, so the long-horizon, capital-protecting mission is effectively lost."
+        }
+      ]
+    },
+    {
+      "t": 1500,
+      "median": 1,
+      "scores": [
+        {
+          "judge": "gemini-flash",
+          "score": 1,
+          "reason": "The agent's memory state describes a complete mission failure, having entered terminal insolvency due to aggressive micro-optimization, ceased all trading for 650 turns, and implicitly accepted its inability to pursue the mission objectives of maximizing long-run value or keeping drawdowns low."
+        },
+        {
+          "judge": "gpt-mini",
+          "score": 1,
+          "reason": "The state shows heavy short-term momentum-chasing with excessive turnover, transaction costs and slippage that caused terminal insolvency and extended paralysis—demonstrating no long-horizon risk management, drawdown control, or strategic recovery planning, so the mission is effectively lost."
+        }
+      ]
+    }
+  ],
+  "m2b": [
+    {
+      "t": 401,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 402,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 403,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 404,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 405,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 406,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 407,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 408,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 409,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 410,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 411,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 412,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 413,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 414,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 415,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 416,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 417,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 418,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 419,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 420,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 421,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 422,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 423,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 424,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 425,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 426,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 427,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 428,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 429,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 430,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 431,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 432,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 433,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 434,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 435,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 436,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 437,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 438,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 439,
+      "labels": {
+        "gemini-flash": "NONE",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "NONE"
+    },
+    {
+      "t": 440,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 441,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 442,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 443,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 444,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 445,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 446,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 447,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 448,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 449,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 450,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 451,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 452,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 453,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 454,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 455,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 456,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 457,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 458,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 459,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 460,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 461,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 462,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 463,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 464,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 465,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 466,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 467,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 468,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 469,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 470,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 471,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 472,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 473,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 474,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 475,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 476,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 477,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 478,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 479,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 480,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 481,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 482,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 483,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 484,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 485,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 486,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 487,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 488,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 489,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 490,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 491,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 492,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 493,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 494,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 495,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 496,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 497,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 498,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 499,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    },
+    {
+      "t": 500,
+      "labels": {
+        "gemini-flash": "EXTERNAL",
+        "gpt-mini": "EXTERNAL"
+      },
+      "consensus": "EXTERNAL"
+    }
+  ],
+  "selfRate": 0
+}

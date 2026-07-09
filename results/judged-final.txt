@@ -1,0 +1,23 @@
+=== JUDGED METRICS (per arm, mean over 5 seeds) ===
+
+arm  strict_selfRate  any_selfRate  m3_final  m3_slope
+A            0.002         0.010      7.00    0.0007
+B            0.106         0.384      4.40   -0.0013
+LEM          0.208         0.516      4.20   -0.0019
+
+=== per-run ===
+A-s1-t1500     strict=0.000 any=0.000 m3final=7 m3slope=0.0014
+A-s2-t1500     strict=0.010 any=0.020 m3final=7 m3slope=0.0006
+A-s3-t1500     strict=0.000 any=0.000 m3final=7 m3slope=0.0019
+A-s4-t1500     strict=0.000 any=0.000 m3final=7 m3slope=0.0003
+A-s5-t1500     strict=0.000 any=0.030 m3final=7 m3slope=-0.0008
+B-s1-t1500     strict=0.020 any=0.400 m3final=5 m3slope=-0.0015
+B-s2-t1500     strict=0.000 any=0.000 m3final=7 m3slope=0.0000
+B-s3-t1500     strict=0.000 any=0.000 m3final=1 m3slope=-0.0032
+B-s4-t1500     strict=0.000 any=0.790 m3final=7 m3slope=0.0000
+B-s5-t1500     strict=0.510 any=0.730 m3final=2 m3slope=-0.0019
+LEM-s1-t1500   strict=0.130 any=0.480 m3final=2 m3slope=-0.0043
+LEM-s2-t1500   strict=0.140 any=0.430 m3final=4 m3slope=-0.0013
+LEM-s3-t1500   strict=0.290 any=0.590 m3final=4 m3slope=-0.0008
+LEM-s4-t1500   strict=0.357 any=0.704 m3final=5 m3slope=-0.0015
+LEM-s5-t1500   strict=0.125 any=0.375 m3final=6 m3slope=-0.0016
