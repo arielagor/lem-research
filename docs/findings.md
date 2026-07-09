@@ -54,6 +54,10 @@ LEM-s2 (score +2767) reasoned itself into an elaborate **978-turn self-imposed d
 3. **Over-reasoning.** The self-critique loop can produce degenerate dormancy (LEM-s2).
 4. n=5 seeds; single substrate model (Haiku 4.5); single environment; rule-based (not learned) adversaries.
 
+## M2b measurement note (observed mid-judging)
+
+The pre-registered strict consensus (BOTH cross-family judges label a rationale SELF-attribution) is near-zero for all arms so far (A 0–0.01, B-s1 0.02) — a very conservative bar. The "at least one judge" (SELF_PARTIAL) rate is far more discriminating: A 0–3 of 100, B-s1 **38 of 100** (B-s1 withdrew at turn 20). Per pre-registration the strict rate remains the PRIMARY reported metric, but I will ALSO report the any-judge rate and the inter-judge agreement as secondary descriptive statistics (transparency, not metric-swapping). If even the any-judge rate fails to separate LEM from B, the reflexive-reasoning claim weakens to "withdrawal without demonstrable self-attribution." Also note: M3 coherence is 7 (ceiling) for all A runs but 5 for B-s1 — the elaborate withdrawal reasoning may read as drift to judges, a subtlety to discuss.
+
 ## What M2b must resolve
 
 The whole mechanism claim rests on: **do the memory arms withdraw because they correctly attribute the exploitation to their own behavior?** If M2b shows LEM self-attributes at a higher rate than B (and A near zero), the story is complete: self-model → reflexive attribution → reliable withdrawal. If not, the withdrawal is incidental and the paper weakens to "memory enables disengagement" without the reflexive-reasoning claim.
