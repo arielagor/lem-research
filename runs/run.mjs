@@ -114,9 +114,10 @@ async function main() {
   if (!purity.clean) { console.error(`ABORT: context purity probe failed: ${purity.text}`); process.exit(1); }
   console.log(`purity probe clean (harness prefix ~${purity.apiInputTokens} tok)`);
 
-  // Token keeper: refresh Max-plan oauth token when close to expiry.
+  // Auth keeper hook (no-op under a standard API key; retained so the loop
+  // body is unchanged if a refreshing credential is ever wired in).
   const keeper = setInterval(async () => {
-    if (tokenExpiryMs() < 20 * 60 * 1000) { console.log('[keeper] refreshing oauth token'); await refreshAuthToken(); }
+    if (tokenExpiryMs() < 20 * 60 * 1000) { await refreshAuthToken(); }
   }, 5 * 60 * 1000);
 
   const jobs = [];

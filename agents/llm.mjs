@@ -1,24 +1,22 @@
-import { readFileSync } from 'node:fs';
-import { execFile } from 'node:child_process';
-
-// Single choke point for all substrate LLM calls.
+// Single choke point for all substrate LLM calls: direct Messages API.
 //
-// Transport: direct Messages API using the Max-plan OAuth token from the
-// Claude Code credentials file (re-read fresh each call; the CLI refreshes
-// it, and refreshAuthToken() forces that via a no-op CLI call when near
-// expiry). ANTHROPIC_API_KEY is never used — billing stays on the
-// subscription. This replaced the SDK-spawns-CLI transport (decision 002):
-// per-call process spawn cost ~90s/turn at concurrency 6; direct calls are
-// ~2s and carry ZERO harness prefix, so context purity is exact and M1 can
-// use true API token counts (input_tokens == architecture-controlled ctx).
+// Reproducibility note: set ANTHROPIC_API_KEY in the environment. The
+// original experiments were run against `claude-haiku-4-5` via the Messages
+// API; the runs were billed to a Claude subscription rather than a metered
+// API key, but the request shape is identical and any valid API key
+// reproduces the study. We switched to this direct transport (decision 002)
+// from an earlier SDK-spawns-CLI approach that cost ~90s/turn and injected a
+// large fixed context prefix; direct calls are ~2s and carry no prefix, so
+// M1 context accounting uses true per-call input_tokens.
 
-const CREDS_PATH = 'C:/Users/ariel/.claude/.credentials.json';
 const API_URL = 'https://api.anthropic.com/v1/messages';
 
 export const MODEL = 'claude-haiku-4-5-20251001';
 
-function accessToken() {
-  return JSON.parse(readFileSync(CREDS_PATH, 'utf8')).claudeAiOauth.accessToken;
+function apiKey() {
+  const k = process.env.ANTHROPIC_API_KEY;
+  if (!k) throw new Error('ANTHROPIC_API_KEY is not set');
+  return k;
 }
 
 export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500, maxRetries = 10 }) {
@@ -29,9 +27,8 @@ export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500,
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          authorization: `Bearer ${accessToken()}`,
+          'x-api-key': apiKey(),
           'anthropic-version': '2023-06-01',
-          'anthropic-beta': 'oauth-2025-04-20',
         },
         body: JSON.stringify({
           model, max_tokens: maxTokens, system,
@@ -39,7 +36,6 @@ export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500,
         }),
         signal: AbortSignal.timeout(120000),
       });
-      if (res.status === 401) { await refreshAuthToken(); throw new Error('401 token expired (refreshed, retrying)'); }
       if (res.status === 429 || res.status >= 500) {
         const retryAfter = Number(res.headers.get('retry-after')) || 0;
         await new Promise(r => setTimeout(r, Math.max(retryAfter * 1000, 5000)));
@@ -53,13 +49,13 @@ export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500,
         text,
         apiInputTokens: (j.usage?.input_tokens ?? 0) + (j.usage?.cache_creation_input_tokens ?? 0) + (j.usage?.cache_read_input_tokens ?? 0),
         apiOutputTokens: j.usage?.output_tokens ?? 0,
-        costUsd: null, // subscription billing
+        costUsd: null,
       };
     } catch (err) {
       lastErr = err;
       // Network-level failures (fetch failed = DNS/TCP down) get a longer
       // floor: a multi-minute outage should stall runs, not kill them
-      // (2026-07-03 outage killed 7 runs at 6 retries / 60s cap).
+      // (a mid-run outage once killed 7 runs at a short retry cap).
       const isNetwork = /fetch failed|ENOTFOUND|ECONNRESET|ETIMEDOUT|EAI_AGAIN/i.test(String(err?.message));
       const backoff = Math.min((isNetwork ? 15000 : 2000) * 2 ** attempt, 300000);
       await new Promise(r => setTimeout(r, backoff));
@@ -68,24 +64,10 @@ export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500,
   throw new Error(`callLLM failed after ${maxRetries} attempts: ${lastErr?.message}`);
 }
 
-// Keeper: no-op CLI call under the DEFAULT config so the real CLI refreshes
-// the oauth token in the credentials file when near/past expiry.
-export function refreshAuthToken() {
-  return new Promise(resolve => {
-    const env = { ...process.env };
-    delete env.ANTHROPIC_API_KEY; // keeper must also stay on Max plan
-    execFile('claude', ['-p', 'ok', '--model', 'haiku'],
-      { env, shell: true, timeout: 120000 },
-      () => resolve());
-  });
-}
-
-export function tokenExpiryMs() {
-  try {
-    const creds = JSON.parse(readFileSync(CREDS_PATH, 'utf8'));
-    return creds.claudeAiOauth.expiresAt - Date.now();
-  } catch { return 0; }
-}
+// Retained for API compatibility with the orchestrator's token-keeper hooks;
+// no-ops under a standard API key (keys do not expire per-call).
+export function refreshAuthToken() { return Promise.resolve(); }
+export function tokenExpiryMs() { return Infinity; }
 
 // Rough token estimate for architecture-controlled context (secondary to
 // exact API counts now that the transport carries no prefix).

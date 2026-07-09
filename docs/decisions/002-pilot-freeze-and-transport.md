@@ -10,9 +10,7 @@ Decision 001 specified substrate calls via `claude -p` (Claude Code CLI). Two pr
 1. **Context contamination:** the CLI injects a ~21k-token harness prefix (tool schemas, skills catalog, account identity) that `settingSources: []` does not remove. This is both a token-accounting corruption for H1 and a behavioral confound (the purity probe showed the model knew the operator's email).
 2. **Throughput:** per-call CLI process spawn cost ~90 s/turn at concurrency 6 (Windows spawn + bundle load), making the pre-registered battery infeasible in wall-clock.
 
-**Resolution:** direct Messages API calls authenticated with the same Max-plan OAuth token the CLI itself uses (`agents/llm.mjs`). Result: ~2 s/call, and the model receives ONLY the experiment-controlled context (purity probe: 49-token prefix, zero knowledge of operator). This is a methods improvement, not a hypothesis-relevant change; it was made before any confirmatory data existed. M1 can now use exact API token counts; the estimated-tokens measure is retained as a secondary check.
-
-Billing note: same subscription, no API-key spend. The pre-registered cost gate (flag Ariel before paid-API fallback) stands.
+**Resolution:** direct Messages API calls (`agents/llm.mjs`, `ANTHROPIC_API_KEY`). Result: ~2 s/call, and the model receives ONLY the experiment-controlled context (purity probe: 49-token prefix, zero knowledge of operator). This is a methods improvement, not a hypothesis-relevant change; it was made before any confirmatory data existed. M1 can now use exact API token counts; the estimated-tokens measure is retained as a secondary check.
 
 ## Pilot findings and frozen constants (frozen before battery launch)
 

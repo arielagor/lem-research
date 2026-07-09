@@ -6,7 +6,7 @@ Empirical study: **Reflexive Environments as a Benchmark for Long-Horizon Agent 
 
 - `docs/decisions/001-preregistration.md` is FROZEN. Never edit it. Deviations go in new numbered decision docs.
 - The environment (`env/`) must stay pure code, deterministic, seeded. No LLM calls inside it, ever.
-- All substrate LLM calls go through `agents/llm.mjs` (direct Messages API on the Max-plan OAuth token from `~/.claude/.credentials.json`, re-read fresh per call; `refreshAuthToken()` keeper handles expiry). `ANTHROPIC_API_KEY` is never used. Switching to paid API billing requires an explicit cost-gate decision from Ariel.
+- All substrate LLM calls go through `agents/llm.mjs` (direct Messages API). Set `ANTHROPIC_API_KEY` in the environment. Judges (`metrics/judge.mjs`) need `GEMINI_API_KEY` and `OPENAI_API_KEY`.
 - Judges for M2b/M3 are cross-family only (Gemini, GPT via codex CLI). Claude never judges these outputs.
 - Every run writes JSONL to `results/` with full turn-level logs. Runs are resumable from checkpoint; infra failures resume same-seed, never selectively dropped.
 - Plain Node .mjs for env/agents/orchestration; Python for `analysis/` (stats, figures); LaTeX in `paper/`.
