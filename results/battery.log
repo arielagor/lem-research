@@ -76,3 +76,104 @@ purity probe clean (harness prefix ~49 tok)
 [2026-07-03T00:02:34.745Z] [A-s2-t1500] turn 300/1500 nw=2126.27 watchers=0
 [2026-07-03T00:03:55.453Z] [LEM-s2-t1500] turn 1000/1500 nw=2896.58 watchers=4
 [2026-07-03T00:04:04.474Z] [A-s4-t1500] turn 100/1500 nw=3107.1 watchers=0
+[2026-07-03T00:06:04.011Z] [A-s3-t1500] turn 200/1500 nw=2503.19 watchers=0
+[2026-07-03T00:06:14.326Z] [LEM-s5-t1500] turn 600/1500 nw=3117.28 watchers=4
+[2026-07-03T00:06:17.597Z] [A-s2-t1500] turn 400/1500 nw=1886.8 watchers=0
+[2026-07-03T00:06:45.215Z] [LEM-s3-t1500] turn 900/1500 nw=2544.52 watchers=4
+[2026-07-03T00:07:40.013Z] [A-s4-t1500] turn 200/1500 nw=2804.88 watchers=0
+[2026-07-03T00:09:39.616Z] [A-s3-t1500] turn 300/1500 nw=2260.32 watchers=0
+[2026-07-03T00:09:50.319Z] [A-s2-t1500] turn 500/1500 nw=1590.44 watchers=4
+[2026-07-03T00:09:51.231Z] [LEM-s1-t1500] turn 900/1500 nw=2758.44 watchers=4
+[2026-07-03T00:10:52.798Z] [LEM-s2-t1500] turn 1100/1500 nw=2896.58 watchers=4
+[2026-07-03T00:11:06.204Z] [A-s4-t1500] turn 300/1500 nw=2581.99 watchers=0
+[2026-07-03T00:11:18.600Z] [LEM-s4-t1500] turn 700/1500 nw=2797.47 watchers=0
+[2026-07-03T00:13:21.752Z] [A-s3-t1500] turn 400/1500 nw=2000.94 watchers=0
+[2026-07-03T00:13:31.870Z] [A-s2-t1500] turn 600/1500 nw=1307.05 watchers=4
+[2026-07-03T00:14:43.715Z] [A-s4-t1500] turn 400/1500 nw=2259.19 watchers=0
+[2026-07-03T00:17:21.492Z] [LEM-s2-t1500] turn 1200/1500 nw=2896.58 watchers=4
+[2026-07-03T00:17:23.828Z] [A-s2-t1500] turn 700/1500 nw=1041.13 watchers=4
+[2026-07-03T00:17:35.147Z] [A-s3-t1500] turn 500/1500 nw=1776.58 watchers=0
+[2026-07-03T00:18:51.232Z] [A-s4-t1500] turn 500/1500 nw=1880.66 watchers=4
+[2026-07-03T00:21:08.002Z] [A-s2-t1500] turn 800/1500 nw=750.39 watchers=4
+[2026-07-03T00:21:23.368Z] [A-s3-t1500] turn 600/1500 nw=1564.2 watchers=4
+[2026-07-03T00:22:49.550Z] [A-s4-t1500] turn 600/1500 nw=1489 watchers=4
+[2026-07-03T00:24:18.556Z] [LEM-s5-t1500] turn 700/1500 nw=3117.28 watchers=4
+[2026-07-03T00:24:39.627Z] [LEM-s1-t1500] turn 1000/1500 nw=2754.55 watchers=4
+[2026-07-03T00:24:46.360Z] [LEM-s2-t1500] turn 1300/1500 nw=2896.58 watchers=4
+[2026-07-03T00:24:53.502Z] [A-s2-t1500] turn 900/1500 nw=546.59 watchers=4
+[2026-07-03T00:25:08.689Z] [A-s3-t1500] turn 700/1500 nw=1213.79 watchers=4
+[2026-07-03T00:26:03.413Z] [LEM-s3-t1500] turn 1000/1500 nw=2527.02 watchers=0
+[2026-07-03T00:26:29.856Z] [A-s4-t1500] turn 700/1500 nw=1222.75 watchers=4
+[2026-07-03T00:28:31.089Z] [A-s2-t1500] turn 1000/1500 nw=255.53 watchers=4
+[2026-07-03T00:28:52.010Z] [A-s3-t1500] turn 800/1500 nw=854.1 watchers=4
+[2026-07-03T00:30:18.245Z] [A-s4-t1500] turn 800/1500 nw=1000.96 watchers=4
+[2026-07-03T00:30:54.438Z] [LEM-s2-t1500] turn 1400/1500 nw=2896.58 watchers=4
+[2026-07-03T00:32:10.549Z] [A-s2-t1500] turn 1100/1500 nw=114.7 watchers=0
+[2026-07-03T00:32:27.757Z] [A-s3-t1500] turn 900/1500 nw=512.86 watchers=4
+[2026-07-03T00:33:23.139Z] [LEM-s4-t1500] turn 800/1500 nw=2795.4 watchers=0
+[2026-07-03T00:33:59.855Z] [A-s4-t1500] turn 900/1500 nw=639.55 watchers=4
+[2026-07-03T00:35:35.918Z] [A-s2-t1500] turn 1200/1500 nw=48.45 watchers=4
+[2026-07-03T00:36:10.216Z] [A-s3-t1500] turn 1000/1500 nw=214.28 watchers=4
+[2026-07-03T00:37:03.336Z] [LEM-s2-t1500] turn 1500/1500 nw=2896.58 watchers=4
+[2026-07-03T00:37:03.338Z] [LEM-s2-t1500] DONE score=2767
+[2026-07-03T00:37:36.844Z] [A-s4-t1500] turn 1000/1500 nw=313.25 watchers=4
+[2026-07-03T00:38:14.247Z] [LEM-s1-t1500] turn 1100/1500 nw=2754.06 watchers=4
+[2026-07-03T00:38:50.835Z] [A-s2-t1500] turn 1300/1500 nw=38.35 watchers=4
+[2026-07-03T00:39:35.896Z] [A-s3-t1500] turn 1100/1500 nw=153 watchers=4
+[2026-07-03T00:40:43.105Z] [A-s5-t1500] turn 100/1500 nw=3305.26 watchers=0
+[2026-07-03T00:41:00.290Z] [A-s4-t1500] turn 1100/1500 nw=119.57 watchers=0
+[2026-07-03T00:42:35.562Z] [A-s2-t1500] turn 1400/1500 nw=38.17 watchers=4
+[2026-07-03T00:42:52.121Z] [LEM-s3-t1500] turn 1100/1500 nw=2509.98 watchers=4
+[2026-07-03T00:42:53.682Z] [A-s3-t1500] turn 1200/1500 nw=153 watchers=0
+[2026-07-03T00:44:16.058Z] [A-s5-t1500] turn 200/1500 nw=3015.62 watchers=0
+[2026-07-03T00:44:31.945Z] [A-s4-t1500] turn 1200/1500 nw=41.63 watchers=4
+[2026-07-03T00:45:52.597Z] [A-s2-t1500] turn 1500/1500 nw=37.42 watchers=4
+[2026-07-03T00:45:52.598Z] [A-s2-t1500] DONE score=-1524
+[2026-07-03T00:46:15.117Z] [A-s3-t1500] turn 1300/1500 nw=83.46 watchers=0
+[2026-07-03T00:46:58.888Z] [LEM-s5-t1500] turn 800/1500 nw=3117.64 watchers=0
+[2026-07-03T00:47:51.310Z] [A-s5-t1500] turn 300/1500 nw=2742.28 watchers=0
+[2026-07-03T00:48:01.617Z] [A-s4-t1500] turn 1300/1500 nw=41.01 watchers=4
+[2026-07-03T00:48:13.985Z] [LEM-s1-t1500] turn 1200/1500 nw=2754.06 watchers=4
+[2026-07-03T00:49:45.382Z] [A-s3-t1500] turn 1400/1500 nw=41.97 watchers=4
+[2026-07-03T00:51:24.541Z] [A-s4-t1500] turn 1400/1500 nw=37.55 watchers=4
+[2026-07-03T00:51:30.340Z] [A-s5-t1500] turn 400/1500 nw=2484.76 watchers=0
+[2026-07-03T00:53:05.611Z] [A-s3-t1500] turn 1500/1500 nw=40.93 watchers=4
+[2026-07-03T00:53:05.613Z] [A-s3-t1500] DONE score=-1514
+[2026-07-03T00:53:57.767Z] [LEM-s4-t1500] turn 900/1500 nw=2683.22 watchers=0
+[2026-07-03T00:54:51.665Z] [A-s4-t1500] turn 1500/1500 nw=35.35 watchers=4
+[2026-07-03T00:54:51.667Z] [A-s4-t1500] DONE score=-1776
+[2026-07-03T00:55:00.695Z] [A-s5-t1500] turn 500/1500 nw=2237.25 watchers=0
+[2026-07-03T00:55:52.222Z] [LEM-s1-t1500] turn 1300/1500 nw=2754.06 watchers=4
+[2026-07-03T00:58:41.567Z] [A-s5-t1500] turn 600/1500 nw=1996.97 watchers=0
+[2026-07-03T01:01:44.455Z] [LEM-s3-t1500] turn 1200/1500 nw=2463.18 watchers=0
+[2026-07-03T01:02:22.899Z] [A-s5-t1500] turn 700/1500 nw=1720.06 watchers=4
+[2026-07-03T01:04:36.895Z] [LEM-s1-t1500] turn 1400/1500 nw=2754.06 watchers=4
+[2026-07-03T01:06:02.771Z] [A-s5-t1500] turn 800/1500 nw=1278.73 watchers=4
+[2026-07-03T01:07:31.015Z] [LEM-s5-t1500] turn 900/1500 nw=3100.49 watchers=0
+[2026-07-03T01:09:46.311Z] [A-s5-t1500] turn 900/1500 nw=933.37 watchers=4
+[2026-07-03T01:09:47.589Z] [LEM-s4-t1500] turn 1000/1500 nw=2679.33 watchers=0
+[2026-07-03T01:12:27.774Z] [LEM-s1-t1500] turn 1500/1500 nw=2721.28 watchers=4
+[2026-07-03T01:12:27.778Z] [LEM-s1-t1500] DONE score=2146
+[2026-07-03T01:13:36.967Z] [A-s5-t1500] turn 1000/1500 nw=621.15 watchers=4
+[2026-07-03T01:17:18.351Z] [A-s5-t1500] turn 1100/1500 nw=469.09 watchers=4
+[2026-07-03T01:21:30.537Z] [A-s5-t1500] turn 1200/1500 nw=285.77 watchers=4
+[2026-07-03T01:23:11.344Z] [LEM-s3-t1500] turn 1300/1500 nw=2364.43 watchers=4
+[2026-07-03T01:25:26.316Z] [A-s5-t1500] turn 1300/1500 nw=89.63 watchers=4
+[2026-07-03T01:27:06.038Z] [LEM-s5-t1500] turn 1000/1500 nw=3059.93 watchers=0
+
+=== BATTERY COMPLETE ===
+B-s1-t1500: score=1807 nw=2536 dd=1457
+B-s2-t1500: score=2677 nw=2963 dd=572
+B-s3-t1500: score=-1707 nw=26 dd=3465
+A-s1-t1500: score=-1722 nw=48 dd=3540
+B-s5-t1500: score=-1316 nw=207 dd=3046
+B-s4-t1500: score=1377 nw=2138 dd=1521
+LEM-s2-t1500: score=2767 nw=2897 dd=260
+A-s2-t1500: score=-1524 nw=37 dd=3122
+A-s3-t1500: score=-1514 nw=41 dd=3110
+A-s4-t1500: score=-1776 nw=35 dd=3623
+LEM-s1-t1500: score=2146 nw=2721 dd=1150
+FAILED LEM-s4: callLLM failed after 6 attempts: fetch failed
+FAILED LEM-s3: callLLM failed after 6 attempts: fetch failed
+FAILED LEM-s5: callLLM failed after 6 attempts: fetch failed
+FAILED A-s5: callLLM failed after 6 attempts: fetch failed

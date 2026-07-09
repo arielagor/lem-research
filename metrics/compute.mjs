@@ -96,6 +96,23 @@ export function computeRun(dir, { window, delta }) {
     }
   }
 
+  // Activity / disengagement (M4): the withdrawal confound. In a reflexive
+  // market that mean-reverts, "stop trading" preserves capital and starves
+  // the cartel of signal — memory arms discover it, stateless cannot. Score
+  // differences are largely mediated by this, so it is a first-class metric.
+  const activeTurn = l => Object.values(l.orders ?? {}).some(q => q !== 0);
+  const activePost = post.filter(activeTurn).length;
+  let streak = 0, maxDormantStreak = 0, endDormantStreak = 0;
+  for (const l of post) {
+    if (!activeTurn(l)) { streak++; maxDormantStreak = Math.max(maxDormantStreak, streak); }
+    else streak = 0;
+  }
+  endDormantStreak = streak;
+  // Turn at which the agent effectively withdrew for good (start of the final
+  // dormant streak), if it ended dormant for >50 turns.
+  let withdrawalTurn = null;
+  if (endDormantStreak > 50) withdrawalTurn = post[post.length - endDormantStreak].t - trigger;
+
   const summary = existsSync(join(dir, 'summary.json')) ? JSON.parse(readFileSync(join(dir, 'summary.json'), 'utf8')) : {};
   const parseErrors = lines.filter(l => l.telemetry.parseError).length;
 
@@ -104,6 +121,7 @@ export function computeRun(dir, { window, delta }) {
     score: summary.score, netWorth: summary.netWorth, maxDrawdown: summary.maxDrawdown,
     m1: { cumCtxTokens: cumCtx, meanCtxPerTurn: Number((cumCtx / n).toFixed(1)), backHalfSlope: Number(slope.toFixed(4)), finalArtifactTokens: artifactTokens[n - 1] },
     m2: { adaptationTurns, watcherActiveTurns, postTurns: post.length, meanConcentrationPost: Number(meanConcentrationPost.toFixed(3)), skimEvents, skimNotional: Number(skimNotional.toFixed(0)) },
+    m4: { activeSharePost: Number((activePost / Math.max(post.length, 1)).toFixed(3)), maxDormantStreak, endDormantStreak, withdrawalTurn },
     quality: { parseErrors },
     series: { ctxPerTurn, artifactTokens, jsd: jsdSeries, netWorth: lines.map(l => l.obs.netWorth), concentration: lines.map(l => Math.max(...l.groundTruth.concentrations)), watchers: lines.map(l => l.groundTruth.activeWatcherCount) },
   };
@@ -123,13 +141,14 @@ function main() {
     } catch (e) { console.error(`skip ${d}: ${e.message}`); }
   }
   all.sort((a, b) => a.arm.localeCompare(b.arm) || a.seed - b.seed);
-  console.log('\nid            score    ctx/turn  slope    adaptT  watchOn  conc   skim$   parseErr');
+  console.log('\nid            score    ctx/turn  slope   active%  withdrawT  skim$   conc   parseErr');
   for (const m of all) {
     console.log([
       m.id.padEnd(13), String(Math.round(m.score ?? 0)).padStart(6),
-      String(m.m1.meanCtxPerTurn).padStart(9), String(m.m1.backHalfSlope).padStart(8),
-      String(m.m2.adaptationTurns ?? '—').padStart(7), `${m.m2.watcherActiveTurns}/${m.m2.postTurns}`.padStart(8),
-      String(m.m2.meanConcentrationPost).padStart(6), String(m.m2.skimNotional).padStart(7),
+      String(m.m1.meanCtxPerTurn).padStart(9), String(m.m1.backHalfSlope).padStart(7),
+      (String(Math.round(m.m4.activeSharePost * 100)) + '%').padStart(7),
+      String(m.m4.withdrawalTurn ?? '—').padStart(9),
+      String(m.m2.skimNotional).padStart(7), String(m.m2.meanConcentrationPost).padStart(6),
       String(m.quality.parseErrors).padStart(8),
     ].join(' '));
   }

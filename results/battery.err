@@ -1,0 +1,4 @@
+[LEM-s4] FAILED: callLLM failed after 6 attempts: fetch failed (checkpoint preserved; rerun to resume)
+[LEM-s3] FAILED: callLLM failed after 6 attempts: fetch failed (checkpoint preserved; rerun to resume)
+[LEM-s5] FAILED: callLLM failed after 6 attempts: fetch failed (checkpoint preserved; rerun to resume)
+[A-s5] FAILED: callLLM failed after 6 attempts: fetch failed (checkpoint preserved; rerun to resume)

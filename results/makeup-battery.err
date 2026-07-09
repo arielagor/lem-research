@@ -1,0 +1,4 @@
+Error: callLLM failed after 6 attempts: fetch failed
+    at callLLM (file:///C:/Users/ariel/.claude/projects/lem-research/agents/llm.mjs:64:9)
+    at async contextPurityProbe (file:///C:/Users/ariel/.claude/projects/lem-research/agents/llm.mjs:108:13)
+    at async main (file:///C:/Users/ariel/.claude/projects/lem-research/runs/run.mjs:113:18)

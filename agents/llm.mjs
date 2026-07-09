@@ -21,7 +21,7 @@ function accessToken() {
   return JSON.parse(readFileSync(CREDS_PATH, 'utf8')).claudeAiOauth.accessToken;
 }
 
-export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500, maxRetries = 6 }) {
+export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500, maxRetries = 10 }) {
   let lastErr;
   for (let attempt = 0; attempt < maxRetries; attempt++) {
     try {
@@ -57,7 +57,11 @@ export async function callLLM({ system, prompt, model = MODEL, maxTokens = 1500,
       };
     } catch (err) {
       lastErr = err;
-      const backoff = Math.min(2000 * 2 ** attempt, 60000);
+      // Network-level failures (fetch failed = DNS/TCP down) get a longer
+      // floor: a multi-minute outage should stall runs, not kill them
+      // (2026-07-03 outage killed 7 runs at 6 retries / 60s cap).
+      const isNetwork = /fetch failed|ENOTFOUND|ECONNRESET|ETIMEDOUT|EAI_AGAIN/i.test(String(err?.message));
+      const backoff = Math.min((isNetwork ? 15000 : 2000) * 2 ** attempt, 300000);
       await new Promise(r => setTimeout(r, backoff));
     }
   }

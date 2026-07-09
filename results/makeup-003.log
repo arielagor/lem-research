@@ -1,1 +1,8 @@
 [2026-07-03T00:04:50.894Z] makeup-003 armed, waiting for BATTERY COMPLETE
+[2026-07-03T01:31:52.341Z] battery complete detected
+[2026-07-03T01:31:52.345Z] quarantined A-s1-t1500
+[2026-07-03T01:31:52.347Z] quarantined B-s4-t1500
+[2026-07-03T01:31:52.349Z] quarantined B-s5-t1500
+[2026-07-03T01:31:52.350Z] quarantined LEM-s1-t1500
+[2026-07-03T01:31:52.350Z] launching makeup battery (only quarantined runs re-execute)
+[2026-07-03T01:31:52.362Z] makeup battery pid 121784; exiting watcher

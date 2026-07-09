@@ -100,6 +100,46 @@ def main():
     ax.legend(fontsize=8, frameon=False); fig.tight_layout()
     fig.savefig(FIGS / "fig4_artifact.pdf"); plt.close(fig)
 
+    # Fig 5: activity rate over time (the withdrawal mechanism, M4)
+    fig, ax = plt.subplots(figsize=(6, 3.2))
+    for arm in ["A", "B", "LEM"]:
+        seqs = []
+        for r in runs:
+            if r["arm"] != arm:
+                continue
+            # reconstruct per-turn activity from orders isn't in series; use a
+            # rolling proxy from netWorth changes is wrong — instead read jsonl.
+            seqs.append(r)
+        # activity is computed here from the stored series if present
+    # activity needs raw orders; compute directly from turns.jsonl
+    import json as _json
+    def activity_curve(arm, w=50):
+        curves = []
+        for d in sorted(RESULTS.iterdir()):
+            if not (d / "turns.jsonl").exists():
+                continue
+            if not d.name.startswith(arm + "-") or "t1500" not in d.name:
+                continue
+            raw = [_json.loads(x) for x in (d / "turns.jsonl").read_text().strip().split("\n")]
+            by = {}
+            for l in raw:
+                by[l["t"]] = l
+            lines = [by[k] for k in sorted(by)]
+            act = [1.0 if any(v != 0 for v in l["orders"].values()) else 0.0 for l in lines]
+            curves.append(act)
+        if not curves:
+            return None
+        n = min(len(c) for c in curves)
+        return np.mean([c[:n] for c in curves], axis=0)
+    for arm in ["A", "B", "LEM"]:
+        y = activity_curve(arm)
+        if y is not None:
+            ax.plot(np.arange(len(smooth(y))), smooth(y), color=ARM_COLORS[arm], label=ARM_LABELS[arm], lw=1.6)
+    ax.axvline(trigger, color="k", ls=":", lw=0.8)
+    ax.set_xlabel("turn"); ax.set_ylabel("trading activity (50-turn MA)")
+    ax.set_ylim(0, 1); ax.legend(fontsize=8, frameon=False); fig.tight_layout()
+    fig.savefig(FIGS / "fig5_activity.pdf"); plt.close(fig)
+
     print(f"figures written to {FIGS}")
 
 
