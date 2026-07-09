@@ -10,3 +10,8 @@ paper/*.blg
 paper/*.synctex.gz
 .sterile-config/
 *sterile-config*/
+
+main.pdf
+paper/*.pdf
+paper/build*.log
+paper/bibtex.log
