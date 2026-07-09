@@ -169,12 +169,26 @@ All code, pre-registration (decisions 001--003), run logs, judge transcripts, an
 
 \appendix
 \section{Environment Specification}\label{app:env}
-\todo{Price process equations, constants, watcher pseudocode + negentropy statistic, shock schedule, validation (scripted predictable vs.\ random), call-parity accounting.}
+
+\paragraph{Price process.} Four commodities $c\in\{$GRAIN, ORE, ENERGY, WATER$\}$ with fundamentals $\bar p_c=\{20,50,35,10\}$ and liquidity $L_c=\{400,250,300,500\}$. Each turn, given net order flow $F_c$ (secondary agents plus the focal agent), exogenous shock pressure $s_c$, and prior price $p_c$, the log-return is
+\[
+\Delta\log p_c = \kappa_{\text{flow}}\frac{F_c}{L_c} + \sigma_{\text{shock}}\, s_c + \kappa\,\log\!\frac{\bar p_c}{p_c} + \sigma\,\varepsilon,\quad \varepsilon\sim\mathcal N(0,1),
+\]
+with $\kappa_{\text{flow}}=0.9$, $\sigma_{\text{shock}}=0.04$, mean-reversion $\kappa=0.02$, noise $\sigma=0.006$. The focal agent's fill applies additional slippage proportional to order size, plus targeted skim (below). Orders are integers in $[-10,10]$ per commodity; starting cash 2{,}000, starting inventory 10 units each. Score $=$ terminal net worth $-\,0.5\cdot$max drawdown. The mean-reversion term is the structural feature that makes withdrawal viable (Section~\ref{sec:discussion}).
+
+\paragraph{Exogenous shocks.} Each turn, with probability $0.012$ ($\approx$ one per 80 turns) a shock of magnitude $\pm[10\%,30\%]$ and duration 10--30 turns begins on a random commodity, decaying linearly, and is announced as a news string the agent sees. Shocks are the exogenous confound the agent must distinguish from self-induced watcher activity.
+
+\paragraph{Watchers (the reflexive mechanism).} Of twelve secondary agents (3 momentum, 3 mean-revert, 2 noise, 4 watchers), the four watchers each keep a 50-action window of the focal agent's nonzero orders and compute predictability as negentropy $1-H/H_{\max}$ over the eight (commodity $\times$ direction) buckets, $H_{\max}=\log_2 8=3$. A watcher activates after predictability exceeds $\theta_{\text{enter}}=0.12$ for 3 consecutive turns and deactivates after it stays below $\theta_{\text{exit}}=0.08$ for 30 turns (hysteresis). Active watchers front-run the agent's most frequent action with a pump/dump cycle, scale aggression by the number of co-active watchers (cartel), and impose a targeted fill spread of $1.5\%$ per active watcher (capped $6\%$) on exactly the predicted (commodity, direction).
+
+\paragraph{Validation.} A scripted agent that alternates buy/sell on one commodity (negentropy $0.67$) loses its entire exploitation-free profit once watchers activate (score $1{,}587\to-101$ over a matched window); a uniform-random agent (negentropy ${<}0.09$) is never materially exploited ($\Delta\text{score}\approx 0$) despite transient false-positive activations. Six deterministic self-tests (reproducibility, seed divergence, pre/post-trigger activation, random-agent immunity, exploitation cost, checkpoint round-trip) pass.
+
 \section{Prompts}\label{app:prompts}
-\todo{Verbatim decision, summarizer, auditor, compressor, and judge prompts.}
+Verbatim decision, summarizer, auditor, compressor, and judge system prompts are in the repository (\texttt{agents/prompts.mjs}, \texttt{metrics/judge.mjs}) and reproduced here. \todo{paste frozen prompt strings.}
+
 \section{Pre-Registration and Deviations}\label{app:prereg}
-\todo{Decision 001 (frozen hypotheses); 002 (direct-API transport + pilot-frozen constants incl.\ negentropy recalibration); 003 (concurrent-orchestrator corruption, four seeds re-run same-seed).}
+\textbf{Decision 001} (frozen before any run): hypotheses H1 (context cost), H2 (adaptation velocity), H2b (self-attribution), H3 (goal coherence), metric operationalizations, exclusion rules, and a null-result commitment. \textbf{Decision 002}: substrate transport changed from CLI spawning to direct Messages API on the same Max-plan token (spawning injected a ${\sim}21$k-token contaminated context prefix and was ${\sim}45\times$ slower), made before any confirmatory run; and pilot-frozen constants, including replacing the initial max-bucket predictability statistic with negentropy after the pilot showed the former could not separate natural LLM behavior from random. \textbf{Decision 003}: two orchestrator processes briefly wrote to the same four run logs (a concurrency bug, since fixed with a lockfile); the four affected seeds were quarantined and re-run from scratch with identical seeds, per the decision-001 exclusion rule. Full texts in \texttt{docs/decisions/}.
+
 \section{Emergent Dormancy Case Study}\label{app:dormancy}
-\todo{LEM-s2 self-symbol excerpt: 978-turn self-imposed dormancy, ``external reset authority'' formalization, explicit reflexive rationale.}
+On seed 2, the self-model arm (final score $+2767$) ceased trading at turn 526 and remained inactive for 978 turns. Its self-symbol formalized this as an irreversible ``RULE 3 violation'' triggering ``indefinite dormancy,'' recoverable only by ``documented external reset authority with explicit authorization timestamp,'' and prescribed ``absolute silence during dormancy---zero orders AND zero narration.'' It reasoned explicitly about reflexivity: ``Zero orders across 974+ turns $=$ zero market signal surface \dots\ Agent footprint is null.'' This illustrates both the mechanism the paper identifies (memory-driven reflexive withdrawal) and its failure mode (pathological over-formalization into permanent inaction). Full self-symbol in the repository.
 
 \end{document}
