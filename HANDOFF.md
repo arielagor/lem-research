@@ -1,3 +1,7 @@
+# HANDOFF — lem-research (updated 2026-07-09: STUDY COMPLETE, paper drafted)
+
+> STATUS: All 15 battery + 3 showcase runs done, judged (cross-family), analyzed, red-teamed, paper drafted (paper/main.pdf, 16pp). Remaining = human actions (OpenReview profile, arXiv endorsement, pick workshop) + optional n>=30 activity-controlled ablation the red-team wants. See docs/findings.md + docs/redteam-synthesis.md.
+
 # HANDOFF — lem-research (2026-07-02)
 
 > ⚠️ **DO NOT launch a second battery/showcase orchestrator.** Check `results/orchestrator-t*.lock` and `Get-Process node` first — a second orchestrator over the same run dirs interleaves writes and corrupts runs (this happened; see decision 003; four runs had to be redone). `runs/run.mjs` now enforces a lockfile, but only trust it on code at/after commit "decision 003".
