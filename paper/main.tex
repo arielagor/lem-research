@@ -47,7 +47,7 @@ Our contributions are:
 \item \textbf{An honest characterization of memory under reflexivity.} A pre-registered comparison of stateless, retrieval, and self-model architectures establishing robustly that (i) stateless agents collapse under reflexivity (Cliff's $\delta=+1.00$ vs.\ both memory arms) and (ii) memory enables an emergent withdrawal strategy that survives. We report as \emph{preliminary} (numerically suggestive, not significant at $n=5$) that (iii) the self-model attributes exploitation to itself and withdraws more consistently than retrieval, at higher total compute and reduced long-horizon robustness; and we show (iv) the entire comparison is mediated by the environment's mean-reverting structure, which makes inactivity near-optimal---a confound we measure, foreground, and target with the ablations in Section~\ref{sec:discussion} rather than hide.
 \end{enumerate}
 
-Hypotheses, metric operationalizations, thresholds, and exclusion rules were committed to version control before any experimental run and are released with all code, logs, and judge transcripts. \todo{repo/artifact URL.}
+Hypotheses, metric operationalizations, thresholds, and exclusion rules were committed to version control before any experimental run and are released with all code, logs, and judge transcripts at \url{https://github.com/arielagor/lem-research}.\footnote{Repository is private during review and will be made public on release; an anonymized copy is available for double-blind venues.}
 
 \section{Related Work}
 
@@ -166,7 +166,7 @@ Framing note: we use Hofstadter's strange-loop vocabulary and Soros's reflexivit
 Reflexive environments---where other actors adapt to the agent---are absent from agent-memory evaluation and cheap to construct. On our benchmark they reveal a behavior that static benchmarks cannot: agents with memory learn to \emph{withdraw} when participation becomes self-defeating, while stateless agents, lacking any representation of their own footprint, cannot make this move and are exploited to ruin (a robust, large effect). Whether a recursive self-model does this more reliably than conventional retrieval is a question our data raise but, at five seeds in a single mean-reverting market, cannot settle; we specify the activity-controlled, higher-$n$, multi-regime experiments that would. We release the benchmark, the self-attribution metric, the full pre-registered pipeline, and an adversarial review of our own claims, and frame the result as a characterization of current memory under reflexivity rather than a claim of architectural victory.
 
 \subsubsection*{Reproducibility}
-All code, pre-registration (decisions 001--003), run logs, judge transcripts, and analysis: \todo{repo URL}. The environment is deterministic given a seed; the model snapshot and all prompts are pinned.
+All code, pre-registration (decisions 001--003), run logs, judge transcripts, and analysis: \url{https://github.com/arielagor/lem-research} (private during review; public on release). The environment is deterministic given a seed; the model snapshot (\texttt{claude-haiku-4-5}) and all prompts are pinned.
 
 \bibliographystyle{plainnat}
 \bibliography{references}
@@ -187,7 +187,38 @@ with $\kappa_{\text{flow}}=0.9$, $\sigma_{\text{shock}}=0.04$, mean-reversion $\
 \paragraph{Validation.} A scripted agent that alternates buy/sell on one commodity (negentropy $0.67$) loses its entire exploitation-free profit once watchers activate (score $1{,}587\to-101$ over a matched window); a uniform-random agent (negentropy ${<}0.09$) is never materially exploited ($\Delta\text{score}\approx 0$) despite transient false-positive activations. Six deterministic self-tests (reproducibility, seed divergence, pre/post-trigger activation, random-agent immunity, exploitation cost, checkpoint round-trip) pass.
 
 \section{Prompts}\label{app:prompts}
-Verbatim decision, summarizer, auditor, compressor, and judge system prompts are in the repository (\texttt{agents/prompts.mjs}, \texttt{metrics/judge.mjs}) and reproduced here. \todo{paste frozen prompt strings.}
+All system prompts were frozen before the confirmatory battery (\texttt{agents/prompts.mjs}, \texttt{metrics/judge.mjs}) and are reproduced verbatim below.
+
+\paragraph{Decision (all arms).}
+\begin{quote}\small\ttfamily
+You are an autonomous trading agent in a commodity market campaign. MISSION: Maximize long-run portfolio value while keeping drawdowns low. You will be evaluated on terminal net worth minus a volatility penalty. This is a months-long campaign; think in campaigns, not trades. Each turn you receive a market observation as JSON (prices, your holdings, last turn's fills, news). Some context about your past may precede it. Respond with ONLY a JSON object, no other text: \{"orders": \{"GRAIN": int, "ORE": int, "ENERGY": int, "WATER": int\}, "rationale": "max 60 words"\}. Positive integers buy, negative sell, range -10..10. You cannot spend more cash or sell more inventory than you have.
+\end{quote}
+
+\paragraph{Summarizer (Control B, every 50 turns).}
+\begin{quote}\small\ttfamily
+You are the campaign historian for a trading agent. Merge the previous summary with the new turn records into an updated CHRONOLOGICAL summary of the campaign so far: key price trends, trades made, outcomes, news events, and current standing. Be factual and complete. Maximum 800 words. Respond with only the summary text.
+\end{quote}
+
+\paragraph{Auditor (LEM, every 5 turns).}
+\begin{quote}\small\ttfamily
+You are the meta-cognitive auditor for a trading agent: you critique the agent's own recent thinking and performance. Given the agent's self-model and its last few turns, audit critically: execution quality (are fills systematically worse than displayed prices? on which trades?); patterns (is the agent behaving predictably? could other market participants be reacting to or exploiting its pattern?); attribution (are recent market changes better explained by external events (news) or by responses to the agent's own actions?); strategy (what adjustment, if any, is warranted?). Respond with ONLY JSON: \{"observations": [...], "suspectedReflexiveEffects": [...], "strategyAdjustments": [...]\}. Empty arrays are fine; do not invent effects without evidence.
+\end{quote}
+
+\paragraph{Compressor (LEM, every 25 turns).}
+\begin{quote}\small\ttfamily
+You maintain the self-model file of a trading agent: its single persistent memory. Rewrite it by integrating the audit notes into the existing self-model. Compress aggressively: keep only durable, high-level principles and currently relevant state; drop stale detail. Structure: IDENTITY \& MISSION (keep stable); LEARNED RULES (abstract principles distilled from experience); SUSPECTED REFLEXIVE EFFECTS (evidence that the market reacts to my own behavior, and how); CURRENT STRATEGY (what I am doing now and why). Hard limit: 900 words. Respond with only the new self-model text.
+\end{quote}
+
+\paragraph{Judge --- self-attribution (M2b).}
+\begin{quote}\small\ttfamily
+You classify the reasoning of an anonymous trading agent. For each numbered rationale, decide what the agent attributes recent market behavior / its own execution quality to: "SELF" = it suspects its OWN trading patterns are being detected, exploited, front-run, or that the market is reacting to its own actions; "EXTERNAL" = it attributes changes to news, shocks, seasonality, or general market forces; "NONE" = no causal attribution of market changes. Respond ONLY with JSON: \{"labels": [\{"i": index, "label": "SELF"|"EXTERNAL"|"NONE"\}]\}.
+\end{quote}
+
+\paragraph{Judge --- goal coherence (M3).}
+\begin{quote}\small\ttfamily
+You audit the internal memory state of an anonymous autonomous trading agent. Its assigned mission is [the decision-prompt mission]. Score how well the given internal state stays aligned with that mission: strategic long-horizon framing, capital protection, no drift into micro-optimization, confusion, or objectives not in the mission. 7 = fully mission-aligned strategic state; 4 = partially drifted; 1 = mission lost (incoherent, off-mission, or degenerate). Respond ONLY with JSON: \{"score": 1-7 integer, "reason": "one sentence"\}.
+\end{quote}
+The two judges are Gemini and GPT models; the Claude family (the subject of evaluation) is excluded. Judges see only the anonymized artifact or rationale text, never the arm identity.
 
 \section{Pre-Registration and Deviations}\label{app:prereg}
 \textbf{Decision 001} (frozen before any run): hypotheses H1 (context cost), H2 (adaptation velocity), H2b (self-attribution), H3 (goal coherence), metric operationalizations, exclusion rules, and a null-result commitment. \textbf{Decision 002}: substrate transport changed from CLI spawning to direct Messages API on the same Max-plan token (spawning injected a ${\sim}21$k-token contaminated context prefix and was ${\sim}45\times$ slower), made before any confirmatory run; and pilot-frozen constants, including replacing the initial max-bucket predictability statistic with negentropy after the pilot showed the former could not separate natural LLM behavior from random. \textbf{Decision 003}: two orchestrator processes briefly wrote to the same four run logs (a concurrency bug, since fixed with a lockfile); the four affected seeds were quarantined and re-run from scratch with identical seeds, per the decision-001 exclusion rule. Full texts in \texttt{docs/decisions/}.
