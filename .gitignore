@@ -17,3 +17,5 @@ paper/build*.log
 paper/bibtex.log
 results/finalize.log
 results/*.marker
+paper/arxiv-submission.tar.gz
+paper/arxiv-abstract.txt
