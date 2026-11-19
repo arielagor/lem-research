@@ -37,11 +37,17 @@ async function openai(model, system, user) {
   return j.choices?.[0]?.message?.content ?? '';
 }
 
+// Judge models pinned explicitly on 2026-11-18 (docs/decisions/2026-11-18-gemini-model-refresh.md).
+// Google retires gemini-2.5-flash and gemini-2.5-pro on 2026-12-01 and reroutes them to
+// gemini-3.5-flash-lite and gemini-3.8-flash. We name those targets here so the change is
+// visible. The labels 'gemini-flash' / 'gemini-pro' are kept because recorded judgments key on
+// them, but they now mean the models below. Scores from before 2026-11-18 (2.5-flash / 2.5-pro)
+// are NOT comparable with later runs; re-judge old transcripts if you need a like-for-like series.
 const JUDGES = [
-  { name: 'gemini-flash', call: (s, u) => gemini('gemini-2.5-flash', s, u) },
+  { name: 'gemini-flash', call: (s, u) => gemini('gemini-3.5-flash-lite', s, u) },
   { name: 'gpt-mini', call: (s, u) => openai('gpt-5-mini', s, u).catch(() => openai('gpt-4.1-mini', s, u)) },
 ];
-const TIEBREAK = { name: 'gemini-pro', call: (s, u) => gemini('gemini-2.5-pro', s, u) };
+const TIEBREAK = { name: 'gemini-pro', call: (s, u) => gemini('gemini-3.8-flash', s, u) };
 
 async function withRetry(fn, tries = 4) {
   let last;

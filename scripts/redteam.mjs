@@ -39,7 +39,9 @@ async function openai(model) {
 }
 
 const out = {};
-for (const [name, fn] of [['gemini-2.5-flash', () => gemini('gemini-2.5-flash')], ['gpt', () => openai('gpt-5').catch(() => openai('gpt-4.1'))]]) {
+// 2026-11-18: gemini-2.5-flash retires 2026-12-01 (rerouted to 3.5-flash-lite); pinned explicitly.
+// redteam-synthesis.md was written from the 2.5-flash run.
+for (const [name, fn] of [['gemini-3.5-flash-lite', () => gemini('gemini-3.5-flash-lite')], ['gpt', () => openai('gpt-5').catch(() => openai('gpt-4.1'))]]) {
   try { out[name] = JSON.parse(await fn()); console.log(`${name}: done`); }
   catch (e) { out[name] = { error: e.message }; console.log(`${name}: ${e.message}`); }
 }
